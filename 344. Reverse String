@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+        //base condition
+        if(s.size() == 1)
+            return;
+        
+        //hypothesis
+        int currentLen = s.size();
+        char temp = s[currentLen-1];
+        s.erase(s.end()-1);
+        reverseString(s);
+        
+        //induction
+        s.insert(s.begin(), temp);
+        return;
+    }
+};
