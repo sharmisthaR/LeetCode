@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        
+        //cumulative sum approach//cumulative sum approach//cumulative sum approach//cumulative sum approach//cumulative sum approach
+        
+        
+        vector<int> cumSum;
+        int n = nums.size();
+         
+        int maxSum;
+        int sum = 0;
+        
+        cumSum.push_back(nums[0]);
+        sum = nums[0];
+        maxSum = sum;
+        
+        for(int i=1; i<n; i++){
+            sum += nums[i];
+            cumSum.push_back(sum);  
+            
+            if(maxSum<sum)
+                maxSum = sum;
+        }
+        //cout<<maxSum;
+        
+        
+        for(int i=1; i<n; i++){
+            for(int j =i; j<n; j++){
+                
+                sum = cumSum[j] - cumSum[i-1];
+                //cout<<sum<<endl;
+                
+                if(maxSum<sum)
+                    maxSum = sum;
+            }
+            
+        }
+        //cout<<maxSum<<"second max";
+        return maxSum;
+    }
+};
