@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maximumBags(vector<int>& capacity, vector<int>& rocks, int additionalRocks) {
+        int i=0,n;
+        n = capacity.size();
+        
+        //create the difference array
+        for(int i=0; i<n; i++){
+            rocks[i] = capacity[i] - rocks[i];
+        }   
+        
+        //sort difference array
+        sort(rocks.begin(), rocks.end());
+        
+        int cnt=0;
+        for(int i=0; i<n;i++){
+            
+            if(rocks[i] == 0) cnt++;
+            else if(rocks[i] <= additionalRocks){
+                additionalRocks -= rocks[i];
+                rocks[i] = 0;
+                cnt++;
+            }
+            else
+                break;
+        }
+        
+        
+        return cnt;
+    }
+};
