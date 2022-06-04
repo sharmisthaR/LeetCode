@@ -1,0 +1,74 @@
+class Solution {
+public:
+    
+    int minSumSubarray(vector<int>& nums){
+        
+    //kadane's algo for minSum
+
+         int sum=0, minSum = INT_MAX;
+
+        for(int i=0; i<nums.size(); i++){
+            sum += nums[i];
+            if(sum < minSum) { minSum = sum;}
+            if(sum > 0) {sum = 0;}
+        }
+        cout<<"minSum: "<<minSum;
+        return minSum;
+    }
+    
+    int maxSumSubarray(vector<int>& nums){
+        //normal kadane's algo
+        
+        int sum=0, maxSum = INT_MIN;
+
+        for(auto i=0; i<nums.size(); i++){
+            sum += nums[i];
+
+            if(sum>maxSum) { maxSum = sum;}
+            if(sum < 0) {sum = 0;}
+        }
+        return maxSum;
+
+    }
+    
+    int withWrap(vector<int>& nums){
+        //circular wrapped
+        int totalSum=0;
+       
+        for(int i=0; i<nums.size(); i++){       //finding the total sum
+            totalSum += nums[i];
+        }
+        
+        int minSum = minSumSubarray(nums);
+        minSum = totalSum - minSum;
+       
+        return minSum;       //total sum of eliments - y(minimum subarray sum)
+        
+    }
+    
+    
+    int maxSubarraySumCircular(vector<int>& nums) {
+        
+        if(nums.size() == 0)
+            return 0;
+        
+        //check if all elements are negative
+        int curSum=0, ans = INT_MIN, flag=1;
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] >= 0){
+                flag = 0;
+                break;
+            }
+            ans = max(ans, nums[i]);
+        }
+        if(flag) return ans;
+        
+        
+        //else
+        int sum1 = maxSumSubarray(nums);
+        int sum2 = withWrap(nums);
+        //cout<<"max sum: "<<sum1<<endl<<"totalsum - minSum: "<<sum2;
+        
+        return max(sum1, sum2);  
+    }
+};
